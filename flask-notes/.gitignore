@@ -1,0 +1,16 @@
+
+.env
+.flaskenv
+
+
+venv/
+env/
+.venv/
+
+
+__pycache__/
+*.py[cod]
+
+
+.vscode/
+.idea/

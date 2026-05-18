@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 style="margin-bottom:20px">My Notes</h2>
+
+<!-- New note form -->
+<form method="POST" action="{{ url_for('notes.create') }}"
+      style="background:white;padding:20px;border-radius:8px;margin-bottom:24px;box-shadow:0 1px 4px rgba(0,0,0,0.08)">
+  {{ form.hidden_tag() }}
+  {{ form.title(placeholder='Note title') }}
+  {{ form.content(placeholder='Write your note...', rows=3, style='margin-top:10px') }}
+  <button style="margin-top:12px">Save note</button>
+</form>
+
+<!-- Notes list -->
+{% for note in notes %}
+<div style="background:white;padding:20px;border-radius:8px;margin-bottom:12px;
+            box-shadow:0 1px 4px rgba(0,0,0,0.08)">
+  <div style="display:flex;justify-content:space-between;align-items:start">
+    <div>
+      <strong>{{ note.title }}</strong>
+      <p style="margin-top:6px;color:#555">{{ note.content }}</p>
+      <small style="color:#999">{{ note.created_at.strftime('%d %b %Y, %H:%M') }}</small>
+    </div>
+    <form method="POST" action="{{ url_for('notes.delete', id=note.id) }}">
+      {{ form.hidden_tag() }}
+      <button style="background:#e74c3c;padding:6px 12px;font-size:13px">Delete</button>
+    </form>
+  </div>
+</div>
+{% else %}
+<p style="color:#999">No notes yet. Write your first one above!</p>
+{% endfor %}
+{% endblock %}

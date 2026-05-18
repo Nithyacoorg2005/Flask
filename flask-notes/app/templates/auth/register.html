@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 style="margin-bottom:20px">Create account</h2>
+<form method="POST">
+  {{ form.hidden_tag() }}   
+
+  <label>Username</label>
+  {{ form.username(placeholder='your username') }}
+  {% for e in form.username.errors %}<p style="color:red">{{ e }}</p>{% endfor %}
+
+  <label style="margin-top:12px;display:block">Email</label>
+  {{ form.email(placeholder='you@example.com') }}
+  {% for e in form.email.errors %}<p style="color:red">{{ e }}</p>{% endfor %}
+
+  <label style="margin-top:12px;display:block">Password</label>
+  {{ form.password() }}
+  {% for e in form.password.errors %}<p style="color:red">{{ e }}</p>{% endfor %}
+
+  <label style="margin-top:12px;display:block">Confirm password</label>
+  {{ form.confirm() }}
+  {% for e in form.confirm.errors %}<p style="color:red">{{ e }}</p>{% endfor %}
+
+  <button style="margin-top:16px">Register</button>
+  <p style="margin-top:12px">Already have an account? 
+    <a href="{{ url_for('auth.login') }}">Log in</a>
+  </p>
+</form>
+{% endblock %}

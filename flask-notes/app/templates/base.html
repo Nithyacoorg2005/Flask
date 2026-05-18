@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Flask Notes</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: sans-serif; background: #f5f5f5; color: #333; }
+    nav { background: #2c3e50; padding: 14px 24px; display: flex;
+          justify-content: space-between; align-items: center; }
+    nav a { color: white; text-decoration: none; margin-left: 16px; }
+    .container { max-width: 720px; margin: 32px auto; padding: 0 16px; }
+    .alert { padding: 10px 16px; border-radius: 6px; margin-bottom: 16px; }
+    .alert-success { background: #d4edda; color: #155724; }
+    .alert-danger  { background: #f8d7da; color: #721c24; }
+    .alert-info    { background: #d1ecf1; color: #0c5460; }
+    input, textarea { width: 100%; padding: 10px; margin-top: 6px;
+                      border: 1px solid #ddd; border-radius: 6px; font-size: 15px; }
+    button { padding: 10px 20px; background: #2c3e50; color: white;
+             border: none; border-radius: 6px; cursor: pointer; font-size: 15px; }
+    button:hover { background: #34495e; }
+  </style>
+</head>
+<body>
+  <nav>
+    <strong style="color:white">Flask Notes</strong>
+    <div>
+      {% if current_user.is_authenticated %}
+        <span style="color:#aaa">{{ current_user.username }}</span>
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('auth.login') }}">Login</a>
+        <a href="{{ url_for('auth.register') }}">Register</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}   <!-- each page fills this in -->
+  </div>
+</body>
+</html>
